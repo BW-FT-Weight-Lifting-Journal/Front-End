@@ -1,26 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Link, Route, Redirect, Switch } from 'react-router-dom';
+//local
 import './App.css';
+import {UserContext} from './contexts/UserContext';
+import PrivateRoute from './PrivateRoute';
+//components
+import Signup from "./authForms/Signup";
+import Login from "./authForms/Login";
+import Nav from './components/Nav'
+
+
 
 function App() {
   return (
     <div className="App">
+       <UserContext.Provider >{/* value={}> */}
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Nav />
+        <Link exact to="/">
+          Home
+        </Link>
+        <Link exact to="/Signup">
+          Signup
+        </Link>
+        <Link exact to="/Login">
+          Login
+        </Link>
+        <Switch>
+        <Route exact path="/Signup" >
+          <Signup />
+        </Route>
+        <Route exact path="/Login">
+          <Login />
+        </Route>
+        </Switch>
       </header>
-    </div>
-  );
+        </UserContext.Provider>
+        </div>
+  )
 }
 
+
 export default App;
+
+
+
+
+
+
