@@ -8,7 +8,8 @@ import PrivateRoute from './PrivateRoute';
 import Signup from "./authForms/Signup";
 import Login from "./authForms/Login";
 import Nav from './components/Nav'
-
+//GlobalStyles
+import GlobalStyle from './GlobalStyles'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <div className="App">
        <UserContext.Provider >{/* value={}> */}
       <header className="App-header">
+        <GlobalStyle />
         <Nav />
         <Link exact to="/">
           Home
@@ -33,6 +35,8 @@ function App() {
         <Route exact path="/Login">
           <Login />
         </Route>
+        <PrivateRoute path="/workouts"/>
+        
         </Switch>
       </header>
         </UserContext.Provider>

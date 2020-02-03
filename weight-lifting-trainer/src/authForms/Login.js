@@ -19,21 +19,28 @@ export default function Login(){
                 <p>The Weightlifting Journal</p>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="text" placeholder="Email" name="email" ref={register({required: true})} />
-                <input type="password" placeholder="Password" name="password" ref={register({required: true, min: 4})} />
 
-                <Button type="submit" color="success">Submit</Button>
+                <input type="text" placeholder="Email" name="email" ref={register({
+                    required: true, pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: "Invalid email address"
+                    }
+                })} />
+                {errors.email && errors.email.message}
+
+                <input type="password" placeholder="Password" name="password" ref={register({ required: true, min: 4})} />
+                {errors.password && errors.password.message}
+                <Button type="submit" color="success">SUBMIT</Button>
             </form>
             <div>
                 <p>Don't have an account?</p>
-                <Button color="success"><Link to="/Signup">Sign Up</Link></Button>
+                <StyledLink to="/Signup"><Button outline color="success">Sign up</Button></StyledLink>
             </div>
         </section>
     );
-}
+};
 
-
-//Styles
+ //Styles
 const StyledButton = styled.button`
     background-color: #00A35E; 
     color:white;
@@ -43,3 +50,10 @@ const StyledButton = styled.button`
     font-size: 16px;
     border-radius: 5px;
    `
+
+const StyledLink = styled(Link)`
+   color:white;
+    :hover & {
+        text-decoration:none;
+    }
+`
