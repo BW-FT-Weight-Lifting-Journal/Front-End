@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-color: white;
+  color: black;
 }
 
 
@@ -14,8 +16,9 @@
   color: black;
 }
 
-.App-link {
+.App-header .link  {
   color: #00A35E;
+  font-weight: bold;
 }
 
 

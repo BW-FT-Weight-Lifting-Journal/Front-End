@@ -8,6 +8,7 @@ import PrivateRoute from './PrivateRoute';
 import Signup from "./authForms/Signup";
 import Login from "./authForms/Login";
 import Nav from './components/Nav'
+import WorkoutList from './components/WorkoutList'
 //GlobalStyles
 import GlobalStyle from './GlobalStyles'
 
@@ -19,15 +20,15 @@ function App() {
       <header className="App-header">
         <GlobalStyle />
         <Nav />
-        <Link exact to="/">
+        {/* <Link className='link' exact to="/">
           Home
         </Link>
-        <Link exact to="/Signup">
+        <Link className='link' exact to="/Signup">
           Signup
         </Link>
-        <Link exact to="/Login">
+        <Link className='link' exact to="/Login">
           Login
-        </Link>
+        </Link> */}
         <Switch>
         <Route exact path="/Signup" >
           <Signup />
@@ -35,7 +36,7 @@ function App() {
         <Route exact path="/Login">
           <Login />
         </Route>
-        <PrivateRoute path="/workouts"/>
+        <PrivateRoute path="/workouts" component={WorkoutList}/>
         
         </Switch>
       </header>

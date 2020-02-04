@@ -4,14 +4,25 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Button } from 'reactstrap';
+import * as yup from "yup";
 
+
+ const schema = yup.object().shape({
+   email: yup.string()
+		.email("Invalid email")
+		.required("Email is required"),
+
+	password: yup.string()
+        .min(4, "Password must be at least 4 characters long")
+		.required("Password is required"),
+});
 
 export default function Login(){
     
-  const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors } = useForm({ validationSchema: schema});
   const onSubmit = data => console.log(data);
-  console.log(errors);
-         
+    console.log(errors);
+            
     return (
         <section>
             <div>
@@ -20,16 +31,12 @@ export default function Login(){
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
 
-                <input type="text" placeholder="Email" name="email" ref={register({
-                    required: true, pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                        message: "Invalid email address"
-                    }
-                })} />
-                {errors.email && errors.email.message}
-
-                <input type="password" placeholder="Password" name="password" ref={register({ required: true, min: 4})} />
-                {errors.password && errors.password.message}
+                <input type="text" placeholder="Email" name="email" ref={register} />
+                {/* {errors.email && errors.email.message} */}
+                {errors.email && <p>{errors.email.message}</p>}
+                <input type="password" placeholder="Password" name="password" ref={register} />
+                {/* {errors.password && errors.password.message} */}
+                {errors.password && <p>{errors.password.message}</p>}
                 <Button type="submit" color="success">SUBMIT</Button>
             </form>
             <div>

@@ -4,19 +4,23 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import { axiosWithAuth } from '../axiosWithAuth';
 import axios from 'axios';
-import yup from 'yup';
+import * as yup from 'yup';
 
 import { Button } from 'reactstrap';
 //local
 
-// const schema = yup.object().shape({
-//     username: yup.string().required(),
+ const schema = yup.object().shape({
+    username: yup.string().required(),
+    password: yup.string().required(),
+    email: yup.string().required(),
+    name: yup.string(),
+    avatar: yup.string()
 
-// })
+ });
 
 const CreateAccount = (props) => {
     const [userCredentials, setUserCredentials] = useState({});
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, watch, errors } = useForm({validationSchema: schema});
     const onSubmit = async data => {
         if (data.password === data.confirmPassword) {
             setUserCredentials({
@@ -33,7 +37,7 @@ const CreateAccount = (props) => {
         axios
             .post("/users/register", userCredentials)
             .then(response => {
-                console.log("create account response", response.data);
+                console.log("Create account response", response.data);
             })
             .catch(error => console.log(error));
     }, [userCredentials]);
@@ -49,7 +53,7 @@ const CreateAccount = (props) => {
         <input type="email" id="email" placeholder="Email" name="email" ref={register({required: true, pattern: /^\S+@\S+$/i, message: "An email address is required"})}/>
         <input type="text" id="avatar" placeholder="Profile Picture" name="avatar" ref={register} />
   
-        <Button type="submit">Create Account</Button>
+        <StyledButton type="submit">Create Account</StyledButton>
 
         <h3> Already have  an account?</h3>
         <h3> <Link exact to="/Login">
