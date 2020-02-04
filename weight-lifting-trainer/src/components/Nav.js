@@ -9,7 +9,7 @@ const Nav = () => {
       <Navigate>
       <NavLink exact to='/'>Log In</NavLink>
       <NavLink to="/signup">Sign Up</NavLink> 
-      <NavLink to = '/addworkform'>New Work Out</NavLink>
+      <NavLink to ="/AddRoutineForm">New Work Out</NavLink>
       <NavLink to='/workouts'>Work Outs</NavLink>
       </Navigate>
     </>

@@ -8,7 +8,8 @@ import PrivateRoute from './PrivateRoute';
 import Signup from "./authForms/Signup";
 import Login from "./authForms/Login";
 import Nav from './components/Nav'
-import WorkoutList from './components/WorkoutList'
+import RoutineList from './components/RoutineList'
+import AddRoutineForm from "./components/workoutForms/AddRoutineForm";
 //GlobalStyles
 import GlobalStyle from './GlobalStyles'
 
@@ -33,10 +34,13 @@ function App() {
         <Route exact path="/Signup" >
           <Signup />
         </Route>
-        <Route exact path="/Login">
+        <Route exact path="/">
           <Login />
+            </Route>
+        <Route exact path="/AddRoutineForm">
+            <AddRoutineForm />
         </Route>
-        <PrivateRoute path="/workouts" component={WorkoutList}/>
+        <PrivateRoute path="/workouts" component={RoutineList}/>
         
         </Switch>
       </header>

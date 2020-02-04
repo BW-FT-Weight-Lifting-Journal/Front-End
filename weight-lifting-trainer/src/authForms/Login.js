@@ -1,27 +1,43 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 //local
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Button } from 'reactstrap';
+import { Button, InputGroup, Input  } from 'reactstrap';
+import { axiosWithAuth } from '../axiosWithAuth';
 import * as yup from "yup";
 
 
  const schema = yup.object().shape({
-   email: yup.string()
-		.email("Invalid email")
-		.required("Email is required"),
+   email: yup.string().required(),
+		// .email("Invalid email"),
+		// .required("Email is required"),
 
-	password: yup.string()
-        .min(4, "Password must be at least 4 characters long")
-		.required("Password is required"),
+	password: yup.string().required()
+        // .min(4, "Password must be at least 4 characters long")
+		// .required("Password is required"),
 });
 
-export default function Login(){
-    
-    const { register, handleSubmit, errors } = useForm({ validationSchema: schema});
-  const onSubmit = data => console.log(data);
-    console.log(errors);
+const Login = (props) => {
+    const [userCredentials, setUserCredentials] = useState({});
+    const { register, handleSubmit, errors } = useForm({validationSchema: schema});
+    const onSubmit = async data => {
+        setUserCredentials({
+            'password': data.password,
+            'email': data.email
+        })
+    }
+   
+    useEffect(() => {
+        axiosWithAuth()
+        //axios
+            .post('/api/auth/login', userCredentials)
+            
+            .then(response => {
+                console.log("Login", userCredentials, response.data);
+            })
+            .catch(error => console.log(error));
+    }, [userCredentials]);
             
     return (
         <section>
@@ -30,14 +46,15 @@ export default function Login(){
                 <p>The Weightlifting Journal</p>
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
+                <InputGroup>
+                    <Input type="email" placeholder="Email" name="email" ref={register({required: true, pattern: /^\S+@\S+$/i})} />
+                    {errors.email && <p>{errors.email.message}</p>}
 
-                <input type="text" placeholder="Email" name="email" ref={register} />
-                {/* {errors.email && errors.email.message} */}
-                {errors.email && <p>{errors.email.message}</p>}
-                <input type="password" placeholder="Password" name="password" ref={register} />
-                {/* {errors.password && errors.password.message} */}
-                {errors.password && <p>{errors.password.message}</p>}
-                <Button type="submit" color="success">SUBMIT</Button>
+                    <Input type="password" placeholder="Password" name="password" ref={register({required: true, minLength:4})} />                
+                    {errors.password && <p>{errors.password.message}</p>}
+                    
+                    <Button type="submit" color="success">SUBMIT</Button>
+                </InputGroup>
             </form>
             <div>
                 <p>Don't have an account?</p>
@@ -64,3 +81,4 @@ const StyledLink = styled(Link)`
         text-decoration:none;
     }
 `
+export default Login;

@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../axiosWithAuth';
 import { UserContext } from '../contexts/UserContext';
 
-export default function WorkoutList() {
-    const {workoutlists, refreshWorkoutLists} = useContext(UserContext);
+export default function RoutineList() {
+    const {routineList, refreshRoutineList} = useContext(UserContext);
     useEffect(() => {
-        refreshWorkoutLists()
+        refreshRoutineList()
     }, [])
     return (
     <>  
-        <h1>Workouts:</h1>
+        <h1>Workout Routines:</h1>
     
-        <Link to="/workouts/new" className="btn">Create a new workout</Link>
-        {workoutlists.map(item => {
+        <Link to="/workouts/new" className="btn">Create a new workout routine</Link>
+        {routineList.map(item => {
             return (
                 <div className="card" key={item.id}>
                     <Link to={{pathname: `workout/${item.id}`, state: {status: `${item.name}`}}}>
