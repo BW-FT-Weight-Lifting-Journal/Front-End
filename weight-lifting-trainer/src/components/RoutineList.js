@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { axiosWithAuth } from '../axiosWithAuth';
-import { UserContext } from '../contexts/UserContext';
+import { RoutineContext } from '../contexts/RoutineContext';
 
 export default function RoutineList() {
-    const {routineList, refreshRoutineList} = useContext(UserContext);
-    useEffect(() => {
-        refreshRoutineList()
-    }, [])
+    const {routineList, setRoutineList} = useContext(RoutineContext);
     return (
     <>  
         <h1>Workout Routines:</h1>

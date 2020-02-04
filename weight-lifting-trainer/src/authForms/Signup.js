@@ -3,8 +3,8 @@ import { useForm  } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { axiosWithAuth } from '../axiosWithAuth';
-import axios from 'axios';
 import * as yup from 'yup';
+import axios from "axios";
 
 import { Button } from 'reactstrap';
 //local
@@ -24,32 +24,37 @@ const CreateAccount = (props) => {
     const onSubmit = async data => {
         if (data.password === data.confirmPassword) {
             setUserCredentials({
-                // 'username': data.username,
-                'password': data.password,
                 'email': data.email,
+                'password': data.password,
                 'name': data.name,
                 'avatarURL': data.avatar
             })
             console.log(userCredentials)
+            console.log('props', props)
         }
     };
     useEffect(() => {
-        axiosWithAuth()
-        //axios
+        // axiosWithAuth()
+        axios
             .post('/api/auth/register', userCredentials)
             
             .then(response => {
-                console.log("Create account response", userCredentials, response.data);
+                console.log(response);
+                localStorage.setItem('token', response.data.token)
+                // setUserCredentials.history.push('/login')
+
             })
-            .catch(error => console.log(error));
+            .catch(error => console.log('ERROR',error));
     }, [userCredentials]);
     
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
           <h1>Sign Up</h1><div className="formGroup">
+
         <input type="text" id="name" placeholder="Full name" name="name" ref={register({maxLength: 30})} />
         {/* <input type="text" id="username" placeholder="Username" name="username" ref={register({required: true, maxLength: 15})}/> */}
         {/* {errors.username && 'A username is required'} */}
+
         <input type="password" id="password" placeholder="Password" name="password" ref={register({required: true, minLength: 4})}/>
         <input type="password" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword" ref={register({required: true, minLength: 4})}/>
         <input type="email" id="email" placeholder="Email" name="email" ref={register({required: true, pattern: /^\S+@\S+$/i, message: "An email address is required"})}/>
