@@ -48,10 +48,10 @@ const Login = (props) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <InputGroup>
                     <Input type="email" placeholder="Email" name="email" ref={register({required: true, pattern: /^\S+@\S+$/i})} />
-                    {errors.email && <p>{errors.email.message}</p>}
+                    {/* {errors.email && <p>{errors.email.message}</p>} */}
 
                     <Input type="password" placeholder="Password" name="password" ref={register({required: true, minLength:4})} />                
-                    {errors.password && <p>{errors.password.message}</p>}
+                    {/* {errors.password && <p>{errors.password.message}</p>} */}
                     
                     <Button type="submit" color="success">SUBMIT</Button>
                 </InputGroup>
