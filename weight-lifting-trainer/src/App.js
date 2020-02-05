@@ -92,7 +92,7 @@ function App() {
         <header className="App-header">
           <GlobalStyle />
           <Nav />
-          {!state.isAuthenticated ? <Login /> : <RoutineList />}
+      
 
           <Switch>
             <Route exact path="/">

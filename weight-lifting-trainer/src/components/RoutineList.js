@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { axiosWithAuth } from "../axiosWithAuth";
-import { RoutineContext } from "./contexts/RoutineContext";
+import { RoutineContext } from "../contexts/RoutineContext";
 import axios from "axios";
 import RoutineCard from "./RoutineCard";
 // export default function RoutineList() {
@@ -38,7 +38,7 @@ import RoutineCard from "./RoutineCard";
 //   );
 // }
 export default function Routine() {
-  const { routine } = useContext(RoutineContext);
+  //   const { routine } = useContext(RoutineContext);
   const [data, setData] = useState([]);
 
   useEffect(() => {

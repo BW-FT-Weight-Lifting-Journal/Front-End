@@ -35,16 +35,20 @@ export const Login = () => {
       isSubmitting: true,
       errorMessage: null
     });
-    axios("/api/auth/login", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email: data.email,
-        password: data.password
-      })
-    })
+    axios(
+      "https://weight-lifting-journal-web25.herokuapp.com//api/auth/login",
+      {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: data.token
+        },
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password
+        })
+      }
+    )
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -100,11 +104,7 @@ export const Login = () => {
             )}
 
             <button disabled={data.isSubmitting}>
-              {data.isSubmitting ? (
-                "loading"
-              ) : (
-                "Login"
-              )}
+              {data.isSubmitting ? "loading" : "Login"}
             </button>
           </form>
         </div>
@@ -113,48 +113,48 @@ export const Login = () => {
   );
 };
 
-  //  const schema = yup.object().shape({
-  //    email: yup.string().required(),
-  // 		// .email("Invalid email"),
-  // 		// .required("Email is required"),
+//  const schema = yup.object().shape({
+//    email: yup.string().required(),
+// 		// .email("Invalid email"),
+// 		// .required("Email is required"),
 
-  // 	password: yup.string().required()
-  //         // .min(4, "Password must be at least 4 characters long")
-  // 		// .required("Password is required"),
-  // });
+// 	password: yup.string().required()
+//         // .min(4, "Password must be at least 4 characters long")
+// 		// .required("Password is required"),
+// });
 
-  // const Login = (props) => {
-  //     const [userCredentials, setUserCredentials] = useState({});
-  //     const { register, handleSubmit } = useForm({validationSchema: schema});
-  //     const onSubmit = (data, event) => {
+// const Login = (props) => {
+//     const [userCredentials, setUserCredentials] = useState({});
+//     const { register, handleSubmit } = useForm({validationSchema: schema});
+//     const onSubmit = (data, event) => {
 
-  //          setUserCredentials({
-  //             'email': data.email,
-  //             'password': data.password
-  //         })
-  //         axios
-  //             .post('api/auth/login', userCredentials)
+//          setUserCredentials({
+//             'email': data.email,
+//             'password': data.password
+//         })
+//         axios
+//             .post('api/auth/login', userCredentials)
 
-  //             .then(response => {
-  //                 console.log("Login", userCredentials, response.data);
-  //                 //localStorage.setItem('token', response.data.token)
-  //                 // SOMETHING.history.push('/workout)
-  //             })
-  //             .catch(error => console.log('ERROR',error));
-  //         console.log(userCredentials);
-  //         console.log('props', props)
-  //     }
+//             .then(response => {
+//                 console.log("Login", userCredentials, response.data);
+//                 //localStorage.setItem('token', response.data.token)
+//                 // SOMETHING.history.push('/workout)
+//             })
+//             .catch(error => console.log('ERROR',error));
+//         console.log(userCredentials);
+//         console.log('props', props)
+//     }
 
-  // useEffect(() => {
-  //     // axiosWithAuth()
-  //     axios
-  //         .post('api/auth/login', userCredentials)
+// useEffect(() => {
+//     // axiosWithAuth()
+//     axios
+//         .post('api/auth/login', userCredentials)
 
-  //         .then(response => {
-  //             console.log("Login", userCredentials, response.data);
-  //         })
-  //         .catch(error => console.log('ERROR',error));
-  // }, [userCredentials]);
+//         .then(response => {
+//             console.log("Login", userCredentials, response.data);
+//         })
+//         .catch(error => console.log('ERROR',error));
+// }, [userCredentials]);
 
 //   return (
 //     <section>

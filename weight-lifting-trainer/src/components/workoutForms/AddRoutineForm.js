@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { RoutineContext } from "../contexts/RoutineContext";
+import { RoutineContext } from "../../contexts/RoutineContext";
 import { useForm } from "react-hook-form";
 import { Button, InputGroup, Input } from "reactstrap";
 import * as yup from "yup";
@@ -21,7 +21,8 @@ export default function AddRoutineForm() {
   });
   const handleSubmit = event => {
     event.preventDefault();
-    addRoutine(newRoutine);
+	addRoutine(newRoutine);
+	console.log(addRoutine)
   };
   const handleChanges = event => {
     const routine = event.target.name;

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 import * as yup from "yup";
 import { Button } from "reactstrap";
-import { AuthContext } from "./contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const schema = yup.object().shape({
   workoutName: yup.string().required(),

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { axiosWithAuth } from "../axiosWithAuth";
-import RoutineContext from "../contexts/RoutineContext";
+import { RoutineContext } from "../contexts/RoutineContext";
 export default function ExerciseCard(props) {
   return (
     <div className="card">
