@@ -1,11 +1,14 @@
-import {createGlobalStyle } from "styled-components"
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-
+p{
+  color: black;
+}
 .card{
-    width: 150px;
-    height: 150px;
-    background: white;
+    width: 600px;
+    height: 500px;
+    color: black;
+    background: lightgrey;
     border: 4px solid lightgrey;
     border-radius: 10px;
     display: flex;
@@ -15,8 +18,10 @@ const GlobalStyle = createGlobalStyle`
   }
   
   .card:hover{
-    border: 4px solid grey;
+    border: 4px solid black;
+    background: grey;
   }
-`
+  
+`;
 
 export default GlobalStyle;
