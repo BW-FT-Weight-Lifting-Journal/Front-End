@@ -14,9 +14,9 @@ export const Login = () => {
   const { dispatch } = React.useContext(AuthContext);
   const initialState = {
     email: "",
-    password: "",
-    isSubmitting: false,
-    errorMessage: null
+    password: ""
+    // isSubmitting: false,
+    // errorMessage: null
   };
 
   const [data, setData] = React.useState(initialState);
@@ -26,28 +26,20 @@ export const Login = () => {
       ...data,
       [event.target.name]: event.target.value
     });
+    //console.log(data);
   };
 
   const handleFormSubmit = event => {
     event.preventDefault();
     setData({
-      ...data,
-      isSubmitting: true,
-      errorMessage: null
+      ...data
+      // isSubmitting: true,
+      // errorMessage: null
     });
+    console.log(data);
     axios(
-      "https://weight-lifting-journal-web25.herokuapp.com//api/auth/login",
-      {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: data.token
-        },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password
-        })
-      }
+      "https://weight-lifting-journal-web25.herokuapp.com/api/auth/login",
+      data
     )
       .then(res => {
         if (res.ok) {
@@ -74,9 +66,8 @@ export const Login = () => {
     <div className="login-container">
       <div className="card">
         <div className="container">
+          <h1>Login</h1>
           <form onSubmit={handleFormSubmit}>
-            <h1>Login</h1>
-
             <label htmlFor="email">
               Email Address
               <input

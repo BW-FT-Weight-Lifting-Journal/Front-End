@@ -89,11 +89,10 @@ function App() {
       <AuthContext.Provider
         value={{ state, dispatch, Routine, addRoutine, addExercise, exercises }}
       >
+        {console.log(addRoutine)}
         <header className="App-header">
           <GlobalStyle />
           <Nav />
-      
-
           <Switch>
             <Route exact path="/">
               <Login />

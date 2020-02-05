@@ -21,8 +21,8 @@ export default function AddRoutineForm() {
   });
   const handleSubmit = event => {
     event.preventDefault();
-	addRoutine(newRoutine);
-	console.log(addRoutine)
+    addRoutine(newRoutine);
+    console.log("addRoutine", addRoutine);
   };
   const handleChanges = event => {
     const routine = event.target.name;
