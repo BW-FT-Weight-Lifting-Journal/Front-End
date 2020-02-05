@@ -32,7 +32,7 @@ function App() {
 				setData(response.data);
 				console.log('RES', response)
 				console.log('RES.Dat', response.data)
-				return(data)			
+				return(data)			//map with RoutineList either by importing RL or moving this to RL
 			});
 	}, []);
 	const refreshRoutine = () => {
