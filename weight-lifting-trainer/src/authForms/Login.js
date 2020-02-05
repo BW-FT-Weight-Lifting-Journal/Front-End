@@ -33,6 +33,8 @@ const Login = (props) => {
             
             .then(response => {
                 console.log("Login", userCredentials, response.data); 
+                //localStorage.setItem('token', response.data.token)
+                // SOMETHING.history.push('/workout)
             })
             .catch(error => console.log('ERROR',error));
         console.log(userCredentials);

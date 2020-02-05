@@ -47,8 +47,8 @@ export default function AddRoutineForm() {
 				</InputGroup>
 			</form>
 			<div>
-				<Button>Delete</Button>
-				<Button>Copy</Button>
+				<Button outline color= "secondary">Delete</Button>
+				<Button outline color="secondary">Copy</Button>
 				<Button color="success">Save</Button>
 			</div>
 		</section>
