@@ -9,6 +9,7 @@ export default function RoutineCard(props) {
       <p>{props.name}</p>
       <p>{props.workoutName}</p>
       <p>{props.date}</p>
+      <Link to={{ pathname: "/workouts/new" }}>create a new workout</Link>
     </div>
   );
 }

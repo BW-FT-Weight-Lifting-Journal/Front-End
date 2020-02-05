@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { axiosWithAuth } from "../axiosWithAuth";
-import { RoutineContext } from "../contexts/RoutineContext";
+import { RoutineContext } from "./contexts/RoutineContext";
 import axios from "axios";
 import RoutineCard from "./RoutineCard";
 // export default function RoutineList() {
@@ -38,9 +38,8 @@ import RoutineCard from "./RoutineCard";
 //   );
 // }
 export default function Routine() {
+  const { routine } = useContext(RoutineContext);
   const [data, setData] = useState([]);
-
-  let routine = [];
 
   useEffect(() => {
     axios
@@ -55,12 +54,20 @@ export default function Routine() {
       });
   }, []);
   return (
-    <Link to="/workouts/exercises">
-      <RoutineCard
-        name={data.name}
-        workoutName={data.workoutName}
-        date={data.date}
-      />
-    </Link>
+    <div className="listOfRoutines">
+      {routine.map(routine => {
+        return (
+          <Link to="/workouts/exercises">
+            <RoutineCard
+              key={routine.id}
+              routine={routine}
+              name={data.name}
+              workoutName={data.workoutName}
+              date={data.date}
+            />
+          </Link>
+        );
+      })}
+    </div>
   );
 }

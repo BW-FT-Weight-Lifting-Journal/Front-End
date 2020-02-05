@@ -4,7 +4,6 @@
   color: black;
 }
 
-
 .App-header {
   background-color: white;
   min-height: 100vh;
@@ -16,14 +15,13 @@
   color: black;
 }
 
-.App-header .link  {
-  color: #00A35E;
+.App-header .link {
+  color: #00a35e;
   font-weight: bold;
 }
-
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  /* padding: 10px; */
 }

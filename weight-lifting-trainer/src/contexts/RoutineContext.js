@@ -1,5 +1,3 @@
 import { createContext } from "react";
 
-const RoutineContext = createContext();
-
-export default RoutineContext;
+export const RoutineContext = createContext();
