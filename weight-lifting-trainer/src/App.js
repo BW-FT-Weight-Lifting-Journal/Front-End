@@ -87,14 +87,23 @@ function App() {
   return (
     <div className="App">
       <AuthContext.Provider
-        value={{ state, dispatch, Routine, addRoutine, addExercise, exercises }}
+        value={{
+          state,
+          dispatch,
+          Routine,
+          addRoutine,
+          addExercise,
+          exercises,
+          routine
+        }}
       >
-        {console.log(addRoutine)}
+        {console.log("addRoutine in app", addRoutine)}
         <header className="App-header">
           <GlobalStyle />
           <Nav />
           <Switch>
             <Route exact path="/">
+              {/* <RoutineList /> */}
               <Login />
             </Route>
 
@@ -102,9 +111,28 @@ function App() {
               <Signup />
             </Route>
 
-            <PrivateRoute exact path="/workouts" component={RoutineList} />
-            <PrivateRoute path="/workouts/exercises" component={ExerciseList} />
-            <PrivateRoute path="/workouts/new" component={AddRoutineForm} />
+            {
+              /* <Private*/ <Route
+                exact
+                path="/workouts"
+                component={RoutineList}
+              />
+            }
+            {
+              /* <Private*/ <Route
+                path="/workouts/exercises"
+                component={ExerciseList}
+              />
+            }
+            {
+              // /* <Private*/ <Route
+              //   path="/workouts/new"
+              //   component={AddRoutineForm}
+              // />
+            }
+            <Route path="/workouts/new">
+              <AddRoutineForm />
+            </Route>
           </Switch>
         </header>
       </AuthContext.Provider>

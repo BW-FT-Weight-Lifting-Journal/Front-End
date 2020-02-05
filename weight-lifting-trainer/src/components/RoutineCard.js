@@ -6,10 +6,10 @@ import { RoutineContext } from "../contexts/RoutineContext";
 export default function RoutineCard(props) {
   return (
     <div className="card">
-      <p>{props.name}</p>
-      <p>{props.workoutName}</p>
-      <p>{props.date}</p>
-      <Link to={{ pathname: "/workouts/new" }}>create a new workout</Link>
+      <p>{props.routine.name}</p>
+      <p>{props.routine.workoutName}</p>
+      <p>{props.routine.date}</p>
+      <Link to="/workouts/new">create a new workout</Link>
     </div>
   );
 }

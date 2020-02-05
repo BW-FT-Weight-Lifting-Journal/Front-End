@@ -15,8 +15,6 @@ export const Login = () => {
   const initialState = {
     email: "",
     password: ""
-    // isSubmitting: false,
-    // errorMessage: null
   };
 
   const [data, setData] = React.useState(initialState);
@@ -26,39 +24,26 @@ export const Login = () => {
       ...data,
       [event.target.name]: event.target.value
     });
-    //console.log(data);
   };
 
   const handleFormSubmit = event => {
     event.preventDefault();
-    setData({
-      ...data
-      // isSubmitting: true,
-      // errorMessage: null
-    });
-    console.log(data);
-    axios(
-      "https://weight-lifting-journal-web25.herokuapp.com/api/auth/login",
-      data
-    )
-      .then(res => {
-        if (res.ok) {
-          return res.json();
+
+    axios
+      .post(
+        "https://weight-lifting-journal-web25.herokuapp.com/api/auth/login",
+        {
+          email: data.email,
+          password: data.password
         }
-        throw res;
+      )
+      .then(res => {
+        console.log("resJson token", res);
+
+        localStorage.setItem("token", res.data.token);
       })
-      .then(resJson => {
-        dispatch({
-          type: "LOGIN",
-          payload: resJson
-        });
-      })
-      .catch(error => {
-        setData({
-          ...data,
-          isSubmitting: false,
-          errorMessage: error.message || error.statusText
-        });
+      .catch(err => {
+        console.log(err);
       });
   };
 

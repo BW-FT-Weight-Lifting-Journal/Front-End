@@ -33,79 +33,78 @@ const CreateAccount = props => {
     }
   };
   useEffect(() => {
-    // axiosWithAuth()
+    axiosWithAuth();
+    //axios
     axios
       .post("/api/auth/register", userCredentials)
 
       .then(response => {
+        console.log("Create account response", userCredentials, response.data);
         console.log(response);
         localStorage.setItem("token", response.data.token);
         // setUserCredentials.history.push('/login')
       })
       .catch(error => console.log("ERROR", error));
   }, [userCredentials]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Sign Up</h1>
       <div className="formGroup">
-      
         <StyledGroup>
-        <Input
-          type="text"
-          id="name"
-          placeholder="Full name"
-          name="name"
-          ref={register({ maxLength: 30 })}
-        />
+          <Input
+            type="text"
+            id="name"
+            placeholder="Full name"
+            name="name"
+            ref={register({ maxLength: 30 })}
+          />
         </StyledGroup>
         {/* <input type="text" id="username" placeholder="Username" name="username" ref={register({required: true, maxLength: 15})}/> */}
         {/* {errors.username && 'A username is required'} */}
-        
+
         <StyledGroup>
-        <Input
-          type="password"
-          id="password"
-          placeholder="Password"
-          name="password"
-          ref={register({ required: true, minLength: 4 })}
-         />
-        </StyledGroup>
-        
-        <StyledGroup>
-        <Input
-          type="password"
-          id="confirmPassword"
-          placeholder="Confirm Password"
-          name="confirmPassword"
-          ref={register({ required: true, minLength: 4 })}
+          <Input
+            type="password"
+            id="password"
+            placeholder="Password"
+            name="password"
+            ref={register({ required: true, minLength: 4 })}
           />
         </StyledGroup>
-        
+
         <StyledGroup>
-        <Input
-          type="email"
-          id="email"
-          placeholder="Email"
-          name="email"
-          ref={register({
-            required: true,
-            pattern: /^\S+@\S+$/i,
-            message: "An email address is required"
-          })}
-         />
+          <Input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            ref={register({ required: true, minLength: 4 })}
+          />
         </StyledGroup>
-        
+
         <StyledGroup>
-        <Input 
-          type="text"
-          id="avatar"
-          placeholder="Profile Picture"
-          name="avatar"
-          ref={register}
-        />
+          <Input
+            type="email"
+            id="email"
+            placeholder="Email"
+            name="email"
+            ref={register({
+              required: true,
+              pattern: /^\S+@\S+$/i,
+              message: "An email address is required"
+            })}
+          />
         </StyledGroup>
-      
+
+        <StyledGroup>
+          <Input
+            type="text"
+            id="avatar"
+            placeholder="Profile Picture"
+            name="avatar"
+            ref={register}
+          />
+        </StyledGroup>
       </div>
       <StyledButton type="submit">Create Account</StyledButton>
 
@@ -116,7 +115,6 @@ const CreateAccount = props => {
           <SignUp>Login</SignUp>
         </Link>
       </h3>
-
     </form>
   );
 };

@@ -14,6 +14,7 @@ const schema = yup.object().shape({
 
 export default function AddRoutineForm() {
   const { addRoutine } = useContext(RoutineContext);
+
   const [newRoutine, setNewRoutine] = useState({
     name: "",
     workoutName: "",
@@ -22,7 +23,7 @@ export default function AddRoutineForm() {
   const handleSubmit = event => {
     event.preventDefault();
     addRoutine(newRoutine);
-    console.log("addRoutine", addRoutine);
+    console.log("addRoutine in addroutineform", addRoutine);
   };
   const handleChanges = event => {
     const routine = event.target.name;
@@ -61,7 +62,11 @@ export default function AddRoutineForm() {
           />
           {errors.muscle && <p>{errors.muscle.message}</p>}
 
-          <Button type="submit" color="success" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            color="success"
+            onClick={(handleSubmit)}
+          >
             SUBMIT
           </Button>
         </InputGroup>

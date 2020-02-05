@@ -38,7 +38,7 @@ import RoutineCard from "./RoutineCard";
 //   );
 // }
 export default function Routine() {
-  //   const { routine } = useContext(RoutineContext);
+  const { routine } = useContext(RoutineContext);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -56,12 +56,13 @@ export default function Routine() {
   return (
     <Link to="/workouts/exercises">
       <RoutineCard
-        // key={routine.id}
-        // routine={routine}
+        key={routine.id}
+        routine={routine}
         name={data.name}
         workoutName={data.workoutName}
         date={data.date}
       />
+      {console.log("routine in routineList", routine)}
     </Link>
   );
 }
