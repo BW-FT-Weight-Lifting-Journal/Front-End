@@ -8,6 +8,12 @@ import * as yup from "yup";
 
 import { AuthContext } from "../App";
 
+const schema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup.string().required("Password is required").min(4)
+  
+   });
+
 export const Login = () => {
   // const history = useHistory();
   const { dispatch } = React.useContext(AuthContext);
@@ -25,7 +31,12 @@ export const Login = () => {
     });
   };
 
-  const handleFormSubmit = event => {
+  const handleFormSubmit = event => {    
+    // YUP Validation
+    schema.validate(data).catch(function(err) {
+      err.email= "Must be valid email'
+  err.errors; // => ['age must be a number']
+});;
     event.preventDefault();
     axios
       .post(
@@ -61,6 +72,7 @@ export const Login = () => {
             name="email"
             id="email"
             onChange={handleInputChange}
+            // required
             // ref={{ required: true, pattern: /^\S+@\S+$/i }}
           />
         </StyledGroup>
@@ -73,6 +85,7 @@ export const Login = () => {
             name="password"
             id="password"
             onChange={handleInputChange}
+            // required
             // ref={{ required: true, minLength: 4 }}
           />
         </StyledGroup>
@@ -172,8 +185,8 @@ export default Login;
 
 //  const schema = yup.object().shape({
 //    email: yup.string().required(),
-// 		// .email("Invalid email"),
-// 		// .required("Email is required"),
+		// .email("Invalid email"),
+		// .required("Email is required"),
 
 // 	password: yup.string().required()
 //         // .min(4, "Password must be at least 4 characters long")

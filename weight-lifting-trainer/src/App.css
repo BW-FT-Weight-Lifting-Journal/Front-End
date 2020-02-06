@@ -37,3 +37,11 @@ a:hover {
   background-color: #00a35e !important;
   color: white !important;
 }
+
+div.iuNceJ:hover{
+background-color: #00a35e !important;
+}
+
+div.iuNceJ:hover p{
+  color: white !important;
+}

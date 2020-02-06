@@ -7,11 +7,11 @@ import { Button, InputGroup, Input } from "reactstrap";
 import * as yup from "yup";
 import { axiosWithAuth } from "../../axiosWithAuth";
 
-const schema = yup.object().shape({
-  routine: yup.string().required("Give it a cool name"),
+// const schema = yup.object().shape({
+//   routine: yup.string().required("Give it a cool name"),
 
-  muscle: yup.string().required("What areas of the body does this target?")
-});
+//   muscle: yup.string().required("What areas of the body does this target?")
+// });
 
 export default function AddRoutineForm() {
   // const { routine } = useContext(RoutineContext)
@@ -19,35 +19,35 @@ export default function AddRoutineForm() {
   const [newRoutine, setNewRoutine] = useState({
     workoutName: ""
   });
-
-  // console.log("addRoutine in addroutineform", addRoutine);
-
-  const handleChanges = event => {
+ 
+  const handleChanges = (event, props) => {
     const routine = event.target.name;
     console.log("e.targ.name", routine);
     console.log(newRoutine, "newroutine");
     setNewRoutine({
       ...newRoutine,
-      [routine]: event.target.value
+      [routine]: event.target.value      
     });
-
-    function handleSubmit(event) {
+    
+    const handleSubmit = (event, props) => {
       event.preventDefault();
       const payload = {
-        workoutName: routine.workoutName
-      };
-
+        workoutName: routine.props.workoutName
+      }
+    
       axiosWithAuth()
         .post("/api/users/2/workouts", payload)
         .then(() => history.push("/workouts"))
         .catch(error => console.log(`error: ${error}`));
       console.log("payload", payload);
-
-      const { register, errors } = useForm({
-        validationSchema: schema
-      });
+      console.log("routine.props", routine.props);
+      // const { register, errors } = useForm({
+      //   validationSchema: schema
+      // });
     }
+  
     return (
+      <>
       <section>
         <div>
           <h2>Add Routine</h2>
@@ -59,23 +59,22 @@ export default function AddRoutineForm() {
               type="text"
               placeholder="Name Your Routine"
               name="routine"
-              ref={register}
+              // ref={register}
               onChange={handleChanges}
               value={newRoutine.name}
             />
-            {errors.routine && <p>{errors.routine.message}</p>}
+            {/* {errors.routine && <p>{errors.routine.message}</p>} */}
 
             <Input
               type="text"
               placeholder="Target Muscles"
               name="muscle"
-              ref={register}
+              // ref={register}
               onChange={handleChanges}
-              value={routine.workoutName}
+              value={routine.props.workoutName}
             />
-            {errors.muscle && <p>{errors.muscle.message}</p>}
-            {/* onClick={handleSubmit} */}
-            <Button type="submit" color="success">
+            {/* {errors.muscle && <p>{errors.muscle.message}</p>} */}
+            <Button type="submit" onClick={handleSubmit} color="success">
               SUBMIT
             </Button>
           </InputGroup>
@@ -90,10 +89,10 @@ export default function AddRoutineForm() {
           <Button color="success">Save</Button>
         </div>
       </section>
+      </>
     );
-  };
+    }
 }
-
 //styles
 
 const StyledButton = styled.button`

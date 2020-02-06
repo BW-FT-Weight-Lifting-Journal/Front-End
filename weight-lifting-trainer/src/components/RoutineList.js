@@ -5,9 +5,9 @@ import { RoutineContext } from "../contexts/RoutineContext";
 import axios from "axios";
 import RoutineCard from "./RoutineCard";
 
-export default function Routine() {
+export default function Routine(props) {
   const { routine } = useContext(RoutineContext);
-
+  
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -27,8 +27,8 @@ export default function Routine() {
   return (
     <Link to="/workouts/exercises">
       <RoutineCard
+        routine={routine.props}
         key={routine.id}
-        routine={routine}
         name={data.name}
         workoutName={data.workoutName}
         date={data.date}

@@ -10,16 +10,16 @@ import { AuthContext } from "../App";
 import { Button, InputGroup, Input } from "reactstrap";
 //local
 
-// const schema = yup.object().shape({
-//   // username: yup.string().required(),
-//   password: yup.string().required(),
-//   email: yup.string().required(),
-//   name: yup.string(),
-//   avatar: yup.string()
-// });
+const schema = yup.object().shape({
+password: yup.string().required(),
+email: yup.string().required(),
+name: yup.string(),
+avatar: yup.string()
+ });
 
 export const CreateAccount = () => {
   const { dispatch } = React.useContext(AuthContext);
+  const { register, handleSubmit } = useForm({ validationSchema: schema });
   const initialState = {
     email: "",
     password: "",
@@ -37,6 +37,8 @@ export const CreateAccount = () => {
   };
 
   const handleFormSubmit = event => {
+    //YUP validation
+    schema.validate(data);
     event.preventDefault();
     console.log({
       email: data.email,
@@ -79,6 +81,7 @@ export const CreateAccount = () => {
             name="name"
             id="name"
             placeholder="Name"
+            //This field not required for backend
           />
           {/* </label> */}
         </StyledGroup>
@@ -93,6 +96,12 @@ export const CreateAccount = () => {
             name="email"
             id="email"
             placeholder="Email"
+            required
+            // ref={register({
+            //   required: true,
+            //   pattern: /^\S+@\S+$/i,
+            //   message: "An email address is required"
+            // })}
           />
           {/* </label> */}
         </StyledGroup>
@@ -107,6 +116,8 @@ export const CreateAccount = () => {
             name="password"
             id="password"
             placeholder="Password"
+            required
+            // ref={register({ required: true, minLength: 4 })}
           />
           {/* </label> */}
         </StyledGroup>
@@ -121,6 +132,7 @@ export const CreateAccount = () => {
             name="avatarURL"
             id="avatarURL"
             placeholder="Profile Picture URL"
+            //this field not required for Backend
           />
           {/* </label> */}
         </StyledGroup>

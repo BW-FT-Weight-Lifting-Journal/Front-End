@@ -8,10 +8,10 @@ import * as yup from "yup";
 import { Button } from "reactstrap";
 import { AuthContext } from "../../contexts/AuthContext";
 
-const schema = yup.object().shape({
-  workoutName: yup.string().required(),
-  muscleGroup: yup.string().required()
-});
+// const schema = yup.object().shape({
+//   workoutName: yup.string().required(),
+//   muscleGroup: yup.string().required()
+// });
 
 export default function AddWorkoutForm() {
   //
@@ -36,25 +36,26 @@ export default function AddWorkoutForm() {
     });
   };
   //
-  const { register, errors } = useForm({
-    validationSchema: schema
-  });
+  // const { register, errors } = useForm({
+  //   validationSchema: schema
+  // });
   const onSubmit = data => console.log(data);
-  console.log(errors);
+  // console.log(errors);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" placeholder="Name" name="workoutName" ref={register} />
-      <p>What is your exercise called?</p>
-      <input
-        type="text"
-        placeholder="Muscle Group"
-        name="muscleGroup"
-        ref={register}
-      />
-      <p>Muscle group this targets</p>
-      <StyledButton type="submit">Save</StyledButton>
-    </form>
+    <section>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <p>What is your exercise called?</p> */}
+        <input type="text" placeholder="Name of exercise" name="exerciseName" onChange={handleChanges} value={newExercise.exercisename}/>
+        
+      
+        <input type="text" placeholder="Target Muscle Group" name="musclesName" onChange={handleChanges} value={newExercise.musclesName}/>
+        {/* <p>Muscle group this targets</p> */}
+      
+        <StyledButton type="submit">Save</StyledButton>
+        </form>
+    </section>
   );
 }
 

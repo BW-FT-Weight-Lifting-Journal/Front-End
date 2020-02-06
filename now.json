@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "name": "weight-lifting-trainer",
+    "builds": [{ "src": "weight-lifting-trainer/package.json", "use": "@now/static-build", "config": {"distDir": "build"} }],
+    "routes": [
+        { "src": "/(.*)", "dest": "weight-lifting-trainer/$1" }
+    ]
+}
