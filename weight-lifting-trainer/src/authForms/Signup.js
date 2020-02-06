@@ -5,117 +5,123 @@ import styled from "styled-components";
 import { axiosWithAuth } from "../axiosWithAuth";
 import * as yup from "yup";
 import axios from "axios";
+import { AuthContext } from "../App";
 
 import { Button, InputGroup, Input } from "reactstrap";
 //local
 
-const schema = yup.object().shape({
-  // username: yup.string().required(),
-  password: yup.string().required(),
-  email: yup.string().required(),
-  name: yup.string(),
-  avatar: yup.string()
-});
+// const schema = yup.object().shape({
+//   // username: yup.string().required(),
+//   password: yup.string().required(),
+//   email: yup.string().required(),
+//   name: yup.string(),
+//   avatar: yup.string()
+// });
 
-const CreateAccount = props => {
-  const [userCredentials, setUserCredentials] = useState({});
-  const { register, handleSubmit } = useForm({ validationSchema: schema });
-  const onSubmit = async data => {
-    if (data.password === data.confirmPassword) {
-      setUserCredentials({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        avatarURL: data.avatar
-      });
-      console.log(userCredentials);
-      console.log("props", props);
-    }
+export const CreateAccount = () => {
+  const { dispatch } = React.useContext(AuthContext);
+  const initialState = {
+    email: "",
+    password: "",
+    name: "",
+    avatarURL: ""
   };
-  useEffect(() => {
-    axiosWithAuth();
-    //axios
+
+  const [data, setData] = React.useState(initialState);
+
+  const handleInputChange = event => {
+    setData({
+      ...data,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleFormSubmit = event => {
+    event.preventDefault();
+    console.log({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      avatarURL: data.avatarURL
+    });
     axios
-      .post("/api/auth/register", userCredentials)
+      .post(
+        "https://weight-lifting-journal-web25.herokuapp.com/api/auth/register",
+        {
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          avatarURL: data.avatarURL
+        }
+      )
+      .then(res => {
+        console.log("res USERID", res);
 
-      .then(response => {
-        console.log("Create account response", userCredentials, response.data);
-        console.log(response);
-        localStorage.setItem("token", response.data.token);
-        // setUserCredentials.history.push('/login')
+        //localStorage.setItem("token", res.data.token);
+        // history.push("/workouts");
       })
-      .catch(error => console.log("ERROR", error));
-  }, [userCredentials]);
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1>Sign Up</h1>
-      <div className="formGroup">
-        <StyledGroup>
-          <Input
-            type="text"
-            id="name"
-            placeholder="Full name"
-            name="name"
-            ref={register({ maxLength: 30 })}
-          />
-        </StyledGroup>
-        {/* <input type="text" id="username" placeholder="Username" name="username" ref={register({required: true, maxLength: 15})}/> */}
-        {/* {errors.username && 'A username is required'} */}
+    <div className="signup-container">
+      <div className="card">
+        <div className="container">
+          <h1>Sign Up</h1>
+          <form onSubmit={handleFormSubmit}>
+            <label htmlFor="name">
+              Full name
+              <input
+                type="text"
+                value={data.name}
+                onChange={handleInputChange}
+                name="name"
+                id="name"
+              />
+            </label>
+            <label htmlFor="email">
+              Email Address
+              <input
+                type="text"
+                value={data.email}
+                onChange={handleInputChange}
+                name="email"
+                id="email"
+              />
+            </label>
 
-        <StyledGroup>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Password"
-            name="password"
-            ref={register({ required: true, minLength: 4 })}
-          />
-        </StyledGroup>
-
-        <StyledGroup>
-          <Input
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm Password"
-            name="confirmPassword"
-            ref={register({ required: true, minLength: 4 })}
-          />
-        </StyledGroup>
-
-        <StyledGroup>
-          <Input
-            type="email"
-            id="email"
-            placeholder="Email"
-            name="email"
-            ref={register({
-              required: true,
-              pattern: /^\S+@\S+$/i,
-              message: "An email address is required"
-            })}
-          />
-        </StyledGroup>
-
-        <StyledGroup>
-          <Input
-            type="text"
-            id="avatar"
-            placeholder="Profile Picture"
-            name="avatar"
-            ref={register}
-          />
-        </StyledGroup>
+            <label htmlFor="password">
+              Password
+              <input
+                type="password"
+                value={data.password}
+                onChange={handleInputChange}
+                name="password"
+                id="password"
+              />
+            </label>
+            <label htmlFor="avatarURL">
+              Profile Picture ( direct URL only)
+              <input
+                type="text"
+                value={data.avatarUrl}
+                onChange={handleInputChange}
+                name="avatarURL"
+                id="avatarURL"
+              />
+            </label>
+            {data.errorMessage && (
+              <span className="form-error">{data.errorMessage}</span>
+            )}
+            <button disabled={data.isSubmitting}>
+              {data.isSubmitting ? "loading" : "Signup"}
+            </button>
+          </form>
+        </div>
       </div>
-      <StyledButton type="submit">Create Account</StyledButton>
-
-      <h3> Already have an account?</h3>
-      <h3>
-        {" "}
-        <Link exact to="/">
-          <SignUp>Login</SignUp>
-        </Link>
-      </h3>
-    </form>
+    </div>
   );
 };
 

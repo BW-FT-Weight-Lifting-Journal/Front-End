@@ -16,7 +16,7 @@ import ExerciseList from "./components/ExerciseList";
 //GlobalStyles
 import GlobalStyle from "./GlobalStyles";
 //context
-import RoutineContext from "./contexts/RoutineContext";
+import { RoutineContext } from "./contexts/RoutineContext";
 import axios from "axios";
 import AddExerciseForm, {
   ExerciseContext
@@ -56,10 +56,11 @@ const reducer = (state, action) => {
 };
 
 function App() {
-  const [Routine, setRoutine] = useState([]);
-  const addRoutine = newRoutine => {
-    setRoutine([...Routine, newRoutine]);
-  };
+  const [routine, setRoutine] = useState([]);
+  // const addRoutine = newRoutine => {
+  //   setRoutine([...routine, newRoutine]
+  //     );
+  // };
   const [exercises, setExercises] = useState([]);
   const addExercise = newExercise => {
     setExercises([...exercises, newExercise]);
@@ -90,51 +91,59 @@ function App() {
         value={{
           state,
           dispatch,
-          Routine,
-          addRoutine,
+          routine,
           addExercise,
-          exercises,
-          routine
+          exercises
         }}
       >
-        {console.log("addRoutine in app", addRoutine)}
-        <header className="App-header">
-          <GlobalStyle />
-          <Nav />
-          <Switch>
-            <Route exact path="/">
-              {/* <RoutineList /> */}
-              <Login />
-            </Route>
+        <RoutineContext.Provider
+          value={{
+            state,
+            dispatch,
+            routine,
+            addExercise,
+            exercises
+          }}
+        >
+          {console.log("addRoutine in app and routine", routine)}
+          <header className="App-header">
+            <GlobalStyle />
+            <Nav />
+            <Switch>
+              <Route exact path="/">
+                {/* <RoutineList /> */}
+                <Login />
+              </Route>
 
-            <Route path="/Signup">
-              <Signup />
-            </Route>
+              <Route path="/Signup">
+                <Signup />
+              </Route>
 
-            {
-              /* <Private*/ <Route
-                exact
-                path="/workouts"
-                component={RoutineList}
-              />
-            }
-            {
-              /* <Private*/ <Route
-                path="/workouts/exercises"
-                component={ExerciseList}
-              />
-            }
-            {
-              // /* <Private*/ <Route
-              //   path="/workouts/new"
-              //   component={AddRoutineForm}
-              // />
-            }
-            <Route path="/workouts/new">
-              <AddRoutineForm />
-            </Route>
-          </Switch>
-        </header>
+              {
+                /* <Private*/ <Route
+                  exact
+                  path="/workouts"
+                  component={RoutineList}
+                />
+              }
+              {
+                /* <Private*/ <Route
+                  path="/workouts/exercises"
+                  component={ExerciseList}
+                />
+              }
+              {
+                // /* <Private*/ <Route
+                //   path="/workouts/new"
+                //   component={AddRoutineForm}
+                // />
+              }
+              <Route path="/workouts/new">
+                <AddRoutineForm />
+              </Route>
+            </Switch>
+          </header>
+        </RoutineContext.Provider>
       </AuthContext.Provider>
     </div>
   );
