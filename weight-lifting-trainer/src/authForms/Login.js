@@ -50,7 +50,7 @@ export const Login = () => {
     <StyledSection>
       <div>
         <h1>Lift Tracker</h1>
-        <p>The Weightlifting Journal</p>
+        <p>-The Weightlifting Journal-</p>
       </div>
       <StyledForm onSubmit={handleFormSubmit}>
         <StyledGroup>
@@ -78,17 +78,17 @@ export const Login = () => {
         </StyledGroup>
         {/* {errors.password && <p>{errors.password.message}</p>} */}
 
-        <StyledButton type="submit" color="success">
+        <StyledButton block type="submit" color="success">
           Login
         </StyledButton>
       </StyledForm>
       <Footer>
         <p>Don't have an account?</p>
-        <StyledLink to="/Signup">
+        <Link className="botBtn" to="/Signup">
           <Button block outline color="success">
             Sign up
           </Button>
-        </StyledLink>
+        </Link>
       </Footer>
     </StyledSection>
   );
@@ -100,27 +100,29 @@ const StyledSection = styled.section`
   display: flex;
   flex-direction: column;
   margin-top: 5%;
+  width: 25%;
 `;
 
 const StyledForm = styled.form`
-  margin-bottom: 45%;
+  margin-bottom: 20%;
   margin-top: 15%;
 `;
 
 const StyledButton = styled(Button)`
   background-color: #00a35e;
-  margin-top: 2%;
+  margin-top: 8%;
 `;
 
-const StyledLink = styled(Link)`
-  color: white;
-  :hover & {
-    text-decoration: none;
-  }
-`;
+// const StyledLink = styled(Link)`
+//   color: white;
+
+//   :hover & {
+//     text-decoration: none;
+//   }
+// `;
 
 const StyledGroup = styled(InputGroup)`
-  margin: 3%;
+  margin-bottom: 2%;
 `;
 
 const Footer = styled.div``;

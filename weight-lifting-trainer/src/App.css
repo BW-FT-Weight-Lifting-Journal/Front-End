@@ -25,3 +25,15 @@
   flex-direction: column;
   /* padding: 10px; */
 }
+
+/* Nav Link Class sc-fzplWN jtmFRh
+Login Button class names = btn btn-outline-success btn-block */
+a:hover {
+  text-decoration: none !important;
+  color: lightgray !important;
+}
+
+.btn:hover {
+  background-color: #00a35e !important;
+  color: white !important;
+}

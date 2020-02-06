@@ -4,12 +4,20 @@ import styled from "styled-components";
 import { axiosWithAuth } from "../axiosWithAuth";
 import { RoutineContext } from "../contexts/RoutineContext";
 export default function RoutineCard(props) {
+  console.log(props, "can you see me?");
   return (
-    <div className="card">
-      <p>{props.routine.name}</p>
-      <p>{props.routine.workoutName}</p>
-      <p>{props.routine.date}</p>
+    <RCard className="card">
+      <p>{props.name}</p>
+      <p>{props.workoutName}</p>
+      <p>{props.date}</p>
       <Link to="/workouts/new">create a new workout</Link>
-    </div>
+    </RCard>
   );
 }
+
+//STYLES
+const RCard = styled.div`
+  background-color: #00a35e;
+  color: white;
+  font-family: Roboto;
+`;

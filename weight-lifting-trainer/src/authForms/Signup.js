@@ -66,62 +66,84 @@ export const CreateAccount = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="card">
-        <div className="container">
-          <h1>Sign Up</h1>
-          <form onSubmit={handleFormSubmit}>
-            <label htmlFor="name">
-              Full name
-              <input
-                type="text"
-                value={data.name}
-                onChange={handleInputChange}
-                name="name"
-                id="name"
-              />
-            </label>
-            <label htmlFor="email">
-              Email Address
-              <input
-                type="text"
-                value={data.email}
-                onChange={handleInputChange}
-                name="email"
-                id="email"
-              />
-            </label>
+    <StyledSection>
+      <h1>Sign Up</h1>
+      <StyledForm onSubmit={handleFormSubmit}>
+        <StyledGroup>
+          {/* <label htmlFor="name">
+              Full name */}
+          <Input
+            type="text"
+            value={data.name}
+            onChange={handleInputChange}
+            name="name"
+            id="name"
+            placeholder="Name"
+          />
+          {/* </label> */}
+        </StyledGroup>
 
-            <label htmlFor="password">
-              Password
-              <input
-                type="password"
-                value={data.password}
-                onChange={handleInputChange}
-                name="password"
-                id="password"
-              />
-            </label>
-            <label htmlFor="avatarURL">
-              Profile Picture ( direct URL only)
-              <input
-                type="text"
-                value={data.avatarUrl}
-                onChange={handleInputChange}
-                name="avatarURL"
-                id="avatarURL"
-              />
-            </label>
-            {data.errorMessage && (
+        <StyledGroup>
+          {/* <label htmlFor="email">
+              Email Address */}
+          <Input
+            type="text"
+            value={data.email}
+            onChange={handleInputChange}
+            name="email"
+            id="email"
+            placeholder="Email"
+          />
+          {/* </label> */}
+        </StyledGroup>
+
+        <StyledGroup>
+          {/* <label htmlFor="password">
+              Password */}
+          <Input
+            type="password"
+            value={data.password}
+            onChange={handleInputChange}
+            name="password"
+            id="password"
+            placeholder="Password"
+          />
+          {/* </label> */}
+        </StyledGroup>
+
+        <StyledGroup>
+          {/* <label htmlFor="avatarURL">
+              Profile Picture ( direct URL only) */}
+          <Input
+            type="text"
+            value={data.avatarUrl}
+            onChange={handleInputChange}
+            name="avatarURL"
+            id="avatarURL"
+            placeholder="Profile Picture URL"
+          />
+          {/* </label> */}
+        </StyledGroup>
+
+        <StyledButton block type="submit" color="success">
+          Register
+        </StyledButton>
+        {/* {data.errorMessage && (
               <span className="form-error">{data.errorMessage}</span>
             )}
             <button disabled={data.isSubmitting}>
               {data.isSubmitting ? "loading" : "Signup"}
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+            </button> */}
+      </StyledForm>
+      <Footer>
+        <p>Already have an account?</p>
+        <Link className="botBtn" to="/">
+          <Button block outline color="success">
+            Login
+          </Button>
+        </Link>
+      </Footer>
+    </StyledSection>
   );
 };
 
@@ -135,24 +157,26 @@ const SignUp = styled.button`
   font-size: 16px;
   border-radius: 5px;
 `;
-const StyledButton = styled.button`
+const StyledButton = styled(Button)`
   background-color: #00a35e;
-  color: white;
-  padding: 0.5%;
-  font-weight: bold;
-  font-family: Roboto;
-  font-size: 16px;
-  border-radius: 5px;
-`;
-
-const StyledLink = styled(Link)`
-  color: white;
-  :hover & {
-    text-decoration: none;
-  }
+  margin-top: 8%;
 `;
 
 const StyledGroup = styled(InputGroup)`
-  margin: 2%;
+  margin-bottom: 2%;
 `;
+
+const StyledForm = styled.form`
+  margin-top: 15%;
+`;
+
+const StyledSection = styled.section`
+  width: 25%;
+  margin-top: 5%;
+`;
+
+const Footer = styled.div`
+  margin-top: 10%;
+`;
+
 export default CreateAccount;

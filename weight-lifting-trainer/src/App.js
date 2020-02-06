@@ -56,14 +56,13 @@ const reducer = (state, action) => {
 };
 
 function App() {
-  const [routine, setRoutine] = useState([]);
-  // const addRoutine = newRoutine => {
-  //   setRoutine([...routine, newRoutine]
-  //     );
-  // };
   const [exercises, setExercises] = useState([]);
+  const [routine, setRoutine] = useState([]);
   const addExercise = newExercise => {
     setExercises([...exercises, newExercise]);
+  };
+  const addRoutine = newRoutine => {
+    setRoutine([...routine, newRoutine]);
   };
   //const [email, setEmail] = useState(JSON.parse(localStorage.getItem("email")));
   // const user = useContext(UserContext)
@@ -93,7 +92,8 @@ function App() {
           dispatch,
           routine,
           addExercise,
-          exercises
+          exercises,
+          addRoutine
         }}
       >
         <RoutineContext.Provider
@@ -102,7 +102,8 @@ function App() {
             dispatch,
             routine,
             addExercise,
-            exercises
+            exercises,
+            addRoutine
           }}
         >
           {console.log("addRoutine in app and routine", routine)}
