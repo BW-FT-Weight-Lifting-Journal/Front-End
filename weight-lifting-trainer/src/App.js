@@ -21,6 +21,7 @@ import axios from "axios";
 import AddExerciseForm, {
   ExerciseContext
 } from "./components/exerciseForms/AddExerciseForm";
+import EditRoutineForm from "./components/workoutForms/EditRoutineForm";
 //local storage
 // import ls from "local-storage";
 
@@ -93,7 +94,7 @@ function App() {
           routine,
           addExercise,
           exercises,
-          addRoutine
+          addRoutine,
         }}
       >
         <RoutineContext.Provider
@@ -142,6 +143,12 @@ function App() {
               <Route path="/workouts/new">
                 <AddRoutineForm />
               </Route>
+              {
+                /* <Private*/ <Route
+                  path="/workouts/edit"
+                  component={EditRoutineForm}
+                />
+              }
             </Switch>
           </header>
         </RoutineContext.Provider>

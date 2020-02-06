@@ -5,22 +5,28 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { Button, InputGroup, Input } from "reactstrap";
 import * as yup from "yup";
+// import { useForm } from 'react-hook-form';
 
 import { AuthContext } from "../App";
 
+
 const schema = yup.object().shape({
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().required("Password is required").min(4)
-  
-   });
+  email: yup.string().email("Invalid Email").required("Email is required"),
+    
+  password: yup.string().min(4, "Must be 4 characters or longer").required("Password is required")
+});
+
 
 export const Login = () => {
   // const history = useHistory();
+
   const { dispatch } = React.useContext(AuthContext);
   const initialState = {
     email: "",
     password: ""
   };
+
+  // const { register, handleSubmit, errors } = useForm({validationSchema: schema});
 
   const [data, setData] = React.useState(initialState);
 
@@ -30,13 +36,15 @@ export const Login = () => {
       [event.target.name]: event.target.value
     });
   };
-
-  const handleFormSubmit = event => {    
-    // YUP Validation
-    schema.validate(data).catch(function(err) {
-      err.email= "Must be valid email'
-  err.errors; // => ['age must be a number']
-});;
+   
+  const handleFormSubmit = event => {
+    //YUP validation
+    schema.validate(data)
+    //   .catch(function (err) {
+    //   err.name;
+    //   err.errors; 
+    // });
+   
     event.preventDefault();
     axios
       .post(
@@ -52,8 +60,8 @@ export const Login = () => {
         localStorage.setItem("token", res.data.token);
         // history.push("/workouts");
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   };
 
@@ -64,6 +72,7 @@ export const Login = () => {
         <p>-The Weightlifting Journal-</p>
       </div>
       <StyledForm onSubmit={handleFormSubmit}>
+        {/* form validaion onSubmit={handleSubmit(handleFormSubmit)} */}
         <StyledGroup>
           <Input
             type="text"
@@ -72,8 +81,8 @@ export const Login = () => {
             name="email"
             id="email"
             onChange={handleInputChange}
-            // required
-            // ref={{ required: true, pattern: /^\S+@\S+$/i }}
+            required
+            // ref={register({required: true, pattern: /^\S+@\S+$/i})}
           />
         </StyledGroup>
         {/* {errors.email && <p>{errors.email.message}</p>} */}
@@ -85,7 +94,7 @@ export const Login = () => {
             name="password"
             id="password"
             onChange={handleInputChange}
-            // required
+            required
             // ref={{ required: true, minLength: 4 }}
           />
         </StyledGroup>

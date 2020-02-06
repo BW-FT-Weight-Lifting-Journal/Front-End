@@ -38,7 +38,11 @@ export const CreateAccount = () => {
 
   const handleFormSubmit = event => {
     //YUP validation
+
     schema.validate(data);
+    //Promise <pending>
+    console.log(schema.validate(data));
+
     event.preventDefault();
     console.log({
       email: data.email,

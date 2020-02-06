@@ -5,8 +5,24 @@ import { RoutineContext } from "../contexts/RoutineContext";
 import axios from "axios";
 import ExerciseCard from "./ExerciseCard";
 
-export default function Exercise() {
+export default function Exercise(props) {
+  const [exercises, setExercises] = useState([]);
   const [data, setData] = useState([]);
+
+  const handleDelete = e => {
+    console.log(e.target.id);
+    axiosWithAuth()
+      .delete("/api/exercises/2")
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    axiosWithAuth()
+      .get("/api/users/2/workouts")
+      .then(res => {
+        console.log(res.data);
+        props.setRoutines(res.data);
+      })
+      .catch(err => console.log(err));
+  };
 
   let routine = [];
 
