@@ -40,6 +40,7 @@ export const Login = () => {
   const handleFormSubmit = event => {
     //YUP validation
     schema.validate(data)
+    // console.log(schema.validate(data));
     //   .catch(function (err) {
     //   err.name;
     //   err.errors; 
@@ -56,7 +57,11 @@ export const Login = () => {
       )
       .then(res => {
         console.log("resJson token", res);
-
+        // schema.validate(data).catch(function (err) {
+        //   err.email
+        //   err.password
+        //   err.errors
+        // });
         localStorage.setItem("token", res.data.token);
         // history.push("/workouts");
       })
