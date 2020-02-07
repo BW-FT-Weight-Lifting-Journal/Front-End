@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { axiosWithAuth } from "../axiosWithAuth";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 import * as yup from "yup";
 import axios from "axios";
 import { AuthContext } from "../App";

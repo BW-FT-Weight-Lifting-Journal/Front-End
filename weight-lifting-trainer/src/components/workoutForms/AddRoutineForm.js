@@ -5,7 +5,7 @@ import { RoutineContext } from "../../contexts/RoutineContext";
 import { useForm } from "react-hook-form";
 import { Button, InputGroup, Input } from "reactstrap";
 import * as yup from "yup";
-import { axiosWithAuth } from "../../axiosWithAuth";
+import { axiosWithAuth } from "../axiosWithAuth";
 
 const schema = yup.object().shape({
   routine: yup.string().required("Give it a cool name"),

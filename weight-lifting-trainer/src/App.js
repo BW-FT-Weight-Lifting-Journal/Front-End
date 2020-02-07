@@ -1,152 +1,156 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link, Route, Redirect, Switch } from "react-router-dom";
-//local
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { UserContext } from "./contexts/UserContext";
-import PrivateRoute from "./PrivateRoute";
-import { axiosWithAuth } from "./axiosWithAuth";
-//components
-import Signup from "./authForms/Signup";
+import { Route, Link } from "react-router-dom";
+import Dashboard from "./components/Dashboard";
 import Login from "./authForms/Login";
-import Nav from "./components/Nav";
-import RoutineCard from "./components/RoutineCard";
-import RoutineList from "./components/RoutineList";
-import AddRoutineForm from "./components/workoutForms/AddRoutineForm";
-import ExerciseList from "./components/ExerciseList";
-//GlobalStyles
-import GlobalStyle from "./GlobalStyles";
-//context
-import { RoutineContext } from "./contexts/RoutineContext";
-import axios from "axios";
-import AddExerciseForm, {
-  ExerciseContext
-} from "./components/exerciseForms/AddExerciseForm";
-//local storage
-// import ls from "local-storage";
-
+import Signup from "./authForms/Signup";
+import { axiosWithAuth } from "./utils/axiosWithAuth";
+import AddWorkout from "./components/AddWorkout";
+import AddUserData from "./components/AddUserData";
+import PrivateRoute from "./components/PrivateRoute";
+import UpdateWorkout from "./components/UpdateWorkout";
+import UpdateUserData from "./components/UpdateUserData";
+import SignUp from "./components/SignUp";
 export const AuthContext = React.createContext();
-
 const initialState = {
   isAuthenticated: false,
   user: null,
   token: null
 };
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload.user,
-        token: action.payload.token
-      };
-    case "LOGOUT":
-      localStorage.clear();
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null
-      };
-    default:
-      return state;
-  }
-};
-
 function App() {
-  const [exercises, setExercises] = useState([]);
-  const [routine, setRoutine] = useState([]);
-  const addExercise = newExercise => {
-    setExercises([...exercises, newExercise]);
-  };
-  const addRoutine = newRoutine => {
-    setRoutine([...routine, newRoutine]);
-  };
-  //const [email, setEmail] = useState(JSON.parse(localStorage.getItem("email")));
-  // const user = useContext(UserContext)
+  const [state, dispatch] = React.useReducer(initialState);
+  const [userid, setUserid] = useState(0);
+  const [workouts, setWorkouts] = useState([]);
+  const [userData, setUserData] = useState([]);
 
-  const [state, dispatch] = React.useReducer(reducer, initialState);
-
-  React.useEffect(() => {
-    const email = JSON.parse(localStorage.getItem("email") || null);
-    const token = JSON.parse(localStorage.getItem("token") || null);
-
-    if (email && token) {
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          email,
-          token
-        }
-      });
+  useEffect(() => {
+    console.log(userid);
+    setUserid(localStorage.getItem("userid"));
+    if (localStorage.getItem("token")) {
+      axiosWithAuth()
+        .get(`/api/users/${userid}/workouts`)
+        .then(res => {
+          console.log("workout data", res.data);
+          setWorkouts(res.data);
+        })
+        .catch(err => console.log(err));
+      axiosWithAuth()
+        .get(`/api/users/${userid}/workouts`)
+        .then(res => {
+          console.log("this is the users data", res.data);
+          setUserData(res.data);
+        })
+        .catch(err => console.log(err));
     }
-  }, []);
+  }, [userid]);
 
-  return (
-    <div className="App">
-      <AuthContext.Provider
-        value={{
-          state,
-          dispatch,
-          routine,
-          addExercise,
-          exercises,
-          addRoutine
-        }}
-      >
-        <RoutineContext.Provider
+  const signOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userid");
+    setUserid(0);
+  };
+  if (!userData) return null;
+  else if (userData) {
+    return (
+      <div className="App">
+        <AuthContext.Provider
           value={{
             state,
-            dispatch,
-            routine,
-            addExercise,
-            exercises,
-            addRoutine
+            dispatch
           }}
         >
-          {console.log("addRoutine in app and routine", routine)}
-          <header className="App-header">
-            <GlobalStyle />
-            <Nav />
-            <Switch>
-              <Route exact path="/">
-                {/* <RoutineList /> */}
-                <Login />
-              </Route>
-
-              <Route path="/Signup">
-                <Signup />
-              </Route>
-
-              {
-                /* <Private*/ <Route
-                  exact
-                  path="/workouts"
-                  component={RoutineList}
-                />
-              }
-              {
-                /* <Private*/ <Route
-                  path="/workouts/exercises"
-                  component={ExerciseList}
-                />
-              }
-              {
-                // /* <Private*/ <Route
-                //   path="/workouts/new"
-                //   component={AddRoutineForm}
-                // />
-              }
-              <Route path="/workouts/new">
-                <AddRoutineForm />
-              </Route>
-            </Switch>
-          </header>
-        </RoutineContext.Provider>
-      </AuthContext.Provider>
-    </div>
-  );
+          <nav className="nav">
+            <div className="header">
+              <span className="fas fa-dumbbell"></span>
+            </div>
+            <div className="nav-links">
+              {!localStorage.getItem("token") && (
+                <Link to="/signin/">Sign In</Link>
+              )}
+              {!localStorage.getItem("token") && (
+                <Link to="/signup/">Sign Up</Link>
+              )}
+              {localStorage.getItem("token") && (
+                <Link to="/dashboard">Dashboard</Link>
+              )}
+              {localStorage.getItem("token") && (
+                <Link to="/addworkout/">Add Workout</Link>
+              )}
+              {localStorage.getItem("token") && (
+                <Link to="/signin/" onClick={signOut}>
+                  Sign Out
+                </Link>
+              )}
+            </div>
+          </nav>
+          <Route
+            exact
+            path="/"
+            render={props => <Signup {...props} setUserid={setUserid} />}
+          />
+          <Route
+            path="/addworkout/"
+            component={props => (
+              <AddWorkout
+                userid={userid}
+                setUserid={setUserid}
+                setWorkouts={setWorkouts}
+                {...props}
+              />
+            )}
+          />
+          <PrivateRoute
+            path="/dashboard"
+            component={props => (
+              <Dashboard
+                userid={userid}
+                setUserid={setUserid}
+                setWorkouts={setWorkouts}
+                workouts={workouts}
+                userData={userData}
+                setUserData={setUserData}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/addinfo"
+            render={props => (
+              <AddUserData {...props} userid={userid} setUserid={setUserid} />
+            )}
+          />
+          <Route
+            path="/signin/"
+            render={props => <Login {...props} setUserid={setUserid} />}
+          />
+          <Route path="/signup/" render={props => <Signup {...props} />} />
+          <Route
+            path="/updateworkout/:id"
+            render={props => (
+              <UpdateWorkout
+                workouts={workouts}
+                userid={userid}
+                setUserid={setUserid}
+                {...props}
+              />
+            )}
+          />
+          <Route
+            path="/updateuserinfo/:id"
+            render={props => (
+              <UpdateUserData
+                {...props}
+                userData={userData}
+                userid={userid}
+                setUserid={setUserid}
+              />
+            )}
+          />
+        </AuthContext.Provider>
+      </div>
+    );
+  }
 }
+
 export default App;
